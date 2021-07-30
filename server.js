@@ -2,7 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 
 import dotenv from "dotenv";
-import userRouter from  "./SERVER/routes/userroutes";
+import userRouter from  "./SERVER/routes/userroutes.js";
+import sessionRouter from "./SERVER/routes/sessionroute.js";
 import bodyParser from "body-parser";
 
 dotenv.config({path:'./.env'});
@@ -12,10 +13,12 @@ const app=express();
 app.use(bodyParser.json());
 
 app.use("/freementor/v1/user",userRouter);
+app.use("/freementor/v1/session",sessionRouter);
+
 app.use('/',(req,res)=>{
     res.status(200).send({
-        status:200,
-        message:"this is freementor APIs"
+    status:200,
+    message:"this is freementor APIs"
     })
 })
 const databaseUrl= process.env.DATABASE;
@@ -25,7 +28,7 @@ const port=process.env.PORT;
 app.listen(port,()=>{
     
 
-    console.log(`server is running on port ${port}`);
+console.log(`server is running on port ${port}`);
 });
 
 export default app;
