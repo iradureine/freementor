@@ -16,9 +16,9 @@ app.use("/freementor/v1/user",userRouter);
 app.use("/freementor/v1/session",sessionRouter);
 
 app.use('/',(req,res)=>{
-    res.status(200).send({
-    status:200,
-    message:"this is freementor APIs"
+    res.status(404).send({
+    status:404,
+    message:"this routes does'nt exist"
     })
 })
 const databaseUrl= process.env.DATABASE;
