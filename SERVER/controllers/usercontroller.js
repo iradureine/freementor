@@ -1,4 +1,4 @@
-import UserInfo from "../modals/usermodal";
+import UserInfo from "../modals/usermodal.js";
 
 class UserController{
     static signupUser= async (req,res)=>{
