@@ -22,13 +22,11 @@ app.use('/',(req,res)=>{
     })
 })
 const databaseUrl= process.env.DATABASE;
-
 mongoose.connect(databaseUrl,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:false}).then(()=>console.log("database is connected sucessfully"));
 const port=process.env.PORT;
 app.listen(port,()=>{
     
-
-console.log("server is running on " +port);
+console.log(`server is running on port ${port}`);
 });
 
 export default app;
