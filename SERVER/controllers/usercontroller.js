@@ -1,4 +1,4 @@
-import UserInfo from "../modals/usermodal";
+import UserInfo from "../modals/usermodal.js";
 
 class UserController{
     static signupUser= async (req,res)=>{
@@ -59,7 +59,7 @@ class UserController{
         if(!user){
             return res.status(404).json({
                 status:404,
-                message:"failed"
+                message:"failed to delete"
             })
 
         }

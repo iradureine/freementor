@@ -16,18 +16,16 @@ app.use("/freementor/v1/user",userRouter);
 app.use("/freementor/v1/session",sessionRouter);
 
 app.use('/',(req,res)=>{
-    res.status(200).send({
-    status:200,
-    message:"this is freementor APIs"
+    res.status(404).send({
+    status:404,
+    message:"this routes does'nt exist"
     })
 })
 const databaseUrl= process.env.DATABASE;
-
 mongoose.connect(databaseUrl,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:false}).then(()=>console.log("database is connected sucessfully"));
-const port=process.env.PORT;
-app.listen(port,()=>{
-    
 
+const port=process.env.PORT;
+app.listen(port,()=>{   
 console.log(`server is running on port ${port}`);
 });
 

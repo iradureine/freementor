@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "learn",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "test",
+    "start": "babel-node ./server.js",
     "dev-start": " nodemon --exec babel-node ./server.js"
   },
   "repository": {
