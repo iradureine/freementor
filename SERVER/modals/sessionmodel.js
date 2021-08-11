@@ -5,8 +5,8 @@ const sessionSchema= new mongoose.Schema({
     description:String,
     user:String, 
     mentor:String,
-    timeToStart:String,
-    timeToEnd:String,
+    timeToStart:Date,
+    timeToEnd:Date,
     status:{
         type:String,
         enum:["pending","decline","approved"],
