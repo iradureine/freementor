@@ -18,9 +18,9 @@ class Validator{
     }
     static newAccountRules(){
         return[
-          check("email","please youur email is invalid").isEmail(),
-          check("firstName", "please your firstnam have special character").isAlpha(),
-          check("lastName","please your firstnam have special character").isAlpha(),
+          check("email","please your email is invalid").isEmail(),
+          check("firstName", "please your firstname have special character").isAlpha(),
+          check("lastName","please your firstname have special character").isAlpha(),
           check("gender","gender is invalid").isIn(['male','female']),
           check("phone","your phone is invalid ").isMobilePhone(),
           check ("age","age should be integer").isInt(),
@@ -29,6 +29,12 @@ class Validator{
         ];
 
     }
+    static checkId(){
+        return [check ("id","id should be mongoId").isMongoId(),
+    ]
+    }
+
+    
 
 }
 export default Validator;

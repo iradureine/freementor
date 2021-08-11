@@ -19,7 +19,10 @@ const UserSchema=new  mongoose.Schema({
 
      role:{type:String,
     enum:["admin","mentor","user"],
-    default:"user"}
+    default:"user"},
+
+   // token:String
+    
 
 })
 

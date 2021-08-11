@@ -80,10 +80,54 @@ static updatesession = async(req,res)=>{
         data:update
 
     })
-
-
-
 }
+static updateSessionStatusAppr=async (req,res)=>{
+    const data= await sessionInfo.findById(req.params.id);
+    let status;
+    if (data.status=="pending"){
+    status="approved";
+}
+    else(status="pending");
+
+    const session = await sessionInfo.findByIdAndUpdate(req.params.id, {status:status});
+    if(!session){
+        return res.status(404).json({
+            status:404,
+            message:"no session available"
+        })
+    }
+    const updatesession = await sessionInfo.findById(req.params.id);
+    return res.status(200).json({
+        status: 200,
+        message: "Success",
+        data:updatesession
+    });
+
+    }
+    static updateSessionStatusDecl=async (req,res)=>{
+        const data= await sessionInfo.findById(req.params.id);
+        let status;
+        if (data.status=="pending"){
+        status="decline";
+    }
+        else(status="pending");
+    
+        const session = await sessionInfo.findByIdAndUpdate(req.params.id, {status:status});
+        if(!session){
+            return res.status(404).json({
+                status:404,
+                message:"no session available"
+            })
+        }
+        const updatesession = await sessionInfo.findById(req.params.id);
+        return res.status(200).json({
+            status: 200,
+            message: "Success",
+            data:updatesession
+        });
+    
+        }
+    
     
 }
 export default sessionController;
