@@ -5,7 +5,7 @@ dotenv.config();
 
 export default class TokenAuth{
     static tokenGenerator(data){
-        const token=jwt.sign(data,process.env.JWTKEY,{expiresIn:"2d"});
+        const token=jwt.sign(data,process.env.JWTKEY,{expiresIn:"4d"});
         return token;
     }
     static getDataFromToken(token){

@@ -1,26 +1,67 @@
 import UserInfo from "../modals/usermodal.js";
-import  TokenAuth from "../helpers/tokenAuth.js"
+import  TokenAuth from "../helpers/tokenAuth.js";
+import bcrypt from "bcrypt";
 
 class UserController{
-    static signupUser= async (req,res)=>{
-        const user=await UserInfo.create(req.body);
-         if (!user){
-             return res.status(400).json({
-                 status:400,
-                 message:"failed to register"
+
+    
+        
+        static signupUser= async (req,res)=>{
+            
+            const saltRound =10;
+        const hashPassword = bcrypt.hashSync(req.body.password,saltRound);
+        
+        req.body.password= hashPassword;
+            const user=await UserInfo.create(req.body);
+             if (!user){
+                 return res.status(400).json({
+                     status:400,
+                     message:"failed to sign up"
+                 })
+             }
+             return res.status(200).json({
+                 status:200,
+                 message:"successful",
+                 data:user
+    
              })
-         }
-         return res.status(200).json({
-             status:200,
-             message:"successful",
-             data:user
+    
+        }
+    static signinUser=async (req,res)=>{
+const {email,password}=req.body;
+        const user=await UserInfo.findOne({email:email});
+        if(!user){
+            return res.status(400).json({
+                status:400,
+                message:"user does not exist"
+            })
+        }
+        if(bcrypt.compareSync(password,user.password)){
+            const token =TokenAuth.tokenGenerator({
+            id:user._id,
+            email:user.email,
+            role:user.role
+        })
+    
+        return res.status(200).json({
+            status:200,
+            message:" login sucessfully",
+            token:token,
+            data:user
 
-         })
-
+        })
     }
+    return res.status(400).json({
+        status:404,
+        message:"password is incorrect"
+    })
+    }
+
+    
     static getAllUsers= async(req,res)=>{
-        const users= await UserInfo.find();
+        const users= await UserInfo.find({role:"user"});
         if(!users){
+
             return res.status(400).json({
                 status:400,
                 message:"failed"
@@ -48,6 +89,26 @@ class UserController{
             status:200,
             message:"successfully",
             data:user
+
+        })
+
+
+
+    }
+    static getspecificMentor = async(req,res)=>{
+        const users= await UserInfo.findById(req.params.id);
+
+        if(users.role!=="mentor"){
+            return res.status(404).json({
+                status:404,
+                message:"is not a mentor"
+            })
+
+        }
+        return res.status(200).json({
+            status:200,
+            message:"successfully",
+            data:users
 
         })
 
@@ -92,37 +153,14 @@ class UserController{
 
         })
     }
-    static signinUser=async (req,res)=>{
-
-        const {email,password}=req.body;
-        const user=await UserInfo.findOne({email:email, password:password});
-        if(!user){
-            return res.status(404).json({
-                status:404,
-                message:"user does not exist"
-            })
-        }
-
-        const token =TokenAuth.tokenGenerator({
-            id:user._id,
-            email:user.email,
-            role:user.role
-        })
-        return res.status(200).json({
-            status:200,
-            message:" login sucessfully",
-            token:token,
-            data:user
-
-        });
-    }
+    
     static getAllMentors = async (req, res) => {
         const users = await UserInfo.find({role:"mentor"});
 
         if (!users) {
             return res.status(404).json({
              status: 404,
-                message: "failed to get all users"
+                message: "failed to get all mentors"
             })
         }
 
@@ -131,6 +169,7 @@ class UserController{
             message: "success",
             data: users
         })
+        
     }
 
     static updateOneUserRole=async (req,res)=>{
@@ -156,8 +195,10 @@ class UserController{
         })
 
         }
+}
     
-    }
+    
+    
         
 
     
