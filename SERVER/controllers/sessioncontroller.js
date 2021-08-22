@@ -2,8 +2,9 @@ import sessionInfo from "../modals/sessionmodel.js";
 
 class sessionController{
     static register= async (req,res)=>{
-        //console.log(req.user);
-        //req.body.user=req.user.id;
+      
+        console.log(req.user);
+        req.body.user=req.user.id;
         const session=await sessionInfo.create(req.body);
          if (!session){
              return res.status(400).json({
@@ -51,8 +52,8 @@ class sessionController{
         })
     }
     static getallsessionofauser = async(req,res)=>{
-        const session= await sessionInfo.findById(req.params.id);
-        if(!session.user!==session){
+        const session= await sessionInfo.find({user:req.user.id});
+        if(!session){
             return res.status(404).json({
                 status:404,
                 message:"failed"
