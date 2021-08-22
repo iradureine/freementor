@@ -20,7 +20,7 @@ UserController.signupUser);
 
 userRouter.post("/signin",UserController.signinUser);
 userRouter.get("/all/mentor",verifyToken,verifyAccess("user"),UserController.getAllMentors);
-userRouter.get("/all",UserController.getAllUsers);
+userRouter.get("/all",verifyToken,verifyAccess("mentor"),UserController.getAllUsers);
 userRouter.get("/:id",Validator.checkId(),Validator.validateInput,UserController.getoneUser);
 userRouter.get("/:id/mentor",verifyToken,verifyAccess("user"),Validator.checkId(),Validator.validateInput,UserController.getspecificMentor);
 userRouter.delete("/:id",verifyToken,verifyAccess("admin"),Validator.checkId(),Validator.validateInput,UserController.deleteUser);
