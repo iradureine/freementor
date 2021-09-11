@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
@@ -7,9 +8,8 @@ import sessionRouter from "./SERVER/routes/sessionroute.js";
 import bodyParser from "body-parser";
 
 dotenv.config({path:'./.env'});
-
-
 const app=express();
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/freementor/v1/user",userRouter);
